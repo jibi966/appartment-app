@@ -14,10 +14,7 @@ const authorize = require("./server/middlewares/authorize");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use(cors());
-app.use(express.json());
-
-app.use(express.static(path.join(__dirname + "./client/build")));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 app.get("*", function (_, res) {
   res.sendFile(path.join(__dirname, "./client"), function (err) {
@@ -25,6 +22,8 @@ app.get("*", function (_, res) {
   });
 });
 
+app.use(cors());
+app.use(express.json());
 app.use("/login", loginController);
 app.use("/register", registerController);
 app.use("/flats", authenticate, authorize, flatController);
